@@ -20,7 +20,9 @@ public class Main {
     static void main(String[] args) throws IOException {
         Path input = Path.of(Arrays.stream(args).findFirst().orElseGet(() -> IO.readln(INPUT_LOCATION_OF_JSON_FILE)));
         if (! input.toString().endsWith(".json")) throw new IllegalArgumentException("A path to a Json file must be input");
-        Path output = input.resolve("..\\" + input.getFileName().toString().replace(".json", ".md"));
+        Path output = input.resolve("..")
+                .resolve(input.getFileName().toString().replace(".json", ".md"))
+                .normalize();
         Files.createFile(output);
         try (var toOutput = new PrintWriter(Files.newBufferedWriter(output))) {
             writeOrders(OrderDao.ORDER_DAO.getAllFromSource(input), toOutput);
