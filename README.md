@@ -31,8 +31,8 @@ The tool reads the adjudicator's JSON results, groups and formats orders by **ow
 
 ### Clone and Build
 ```bash
-git clone https://github.com/<your-username>/<your-repo>.git
-cd <your-repo>
+git clone https://github.com/LudoBC/5DOrdersLogger.git
+cd 5DOrdersLogger
 mvn package
 ```
 
