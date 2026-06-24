@@ -34,7 +34,7 @@ public class Main {
             output.println("# " + key);
             value.stream().collect(groupingBy(Order::timeline)).values().forEach(ownedOrders -> {
                 int currentTurn = ownedOrders.stream().mapToInt(Order::turn).max().orElseThrow();
-                output.println("T" + ownedOrders.getFirst().timeline() + Order.turnString(currentTurn) + ":");
+                output.println("T" + ownedOrders.getFirst().timeline() + " " + Order.turnString(currentTurn) + ":");
                 ownedOrders.stream()
                         .filter(order -> order.turn() == currentTurn)
                         .map(Order::printableString)
@@ -42,6 +42,5 @@ public class Main {
             });
             output.println();
         });
-
     }
 }
