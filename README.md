@@ -22,3 +22,57 @@ The tool reads the adjudicator's JSON results, groups and formats orders by **ow
     - Disband
 - Marks failed orders by italicising
 - Outputs clean, human-readable Markdown
+
+---
+
+### Prerequisites
+- Java 25+ (or compatible version)
+- Maven for building (if running from source)
+
+### Clone and Build
+```bash
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
+mvn package
+```
+
+This will produce a runnable JAR in target/.
+
+### Usage
+
+You can run the tool in two ways:
+
+1. Provide JSON file path as an argument
+```Bash
+java -jar target/order-log-generator.jar /path/to/results.json
+```
+2. Run without arguments (interactive prompt)
+```Bash
+java -jar target/order-log-generator.jar
+```
+You will be prompted:
+
+
+```
+Please input the location on the local file system of the .json file containing the results to be turned into the orders log.
+This file can be obtained from the 5D diplomacy adjudicator.
+```
+
+### Output
+
+The generated .md file will be created in the same directory as the input JSON.
+The filename will match the JSON filename but with .md extension.
+
+Example:
+
+```results.json  →  results.md```
+
+### Development & Testing
+Run Unit Tests
+```Bash
+mvn test
+```
+
+### License
+This project is licensed under the MIT License.
+
