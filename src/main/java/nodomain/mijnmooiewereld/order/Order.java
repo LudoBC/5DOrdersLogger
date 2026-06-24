@@ -9,11 +9,11 @@ public interface Order {
     Location location();
 
     default int timeline() {
-        return location().timeline();
+        return location().board().timeline();
     }
 
     default int year() {
-        return location().year();
+        return location().board().year();
     }
 
     default String owner() {
@@ -34,7 +34,7 @@ public interface Order {
     int STARTING_YEAR = 1901;
 
     default int turn() {
-        if ("Fall".equals(location().phase())) {
+        if ("Fall".equals(location().board().phase())) {
             return 2 * (year() - STARTING_YEAR) + 1;
         }
         return 2 * (year() - STARTING_YEAR);

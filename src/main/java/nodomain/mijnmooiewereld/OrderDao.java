@@ -25,23 +25,34 @@ public enum OrderDao {
     @JsonIgnoreProperties(ignoreUnknown = true)
     private record OrderDTO(
             String $type,
-            Location destination,
+            LocationDTO destination,
             String status,
             Unit unit,
-            Location location,
-            Location supportLocation,
-            Location convoyLocation
+            LocationDTO location,
+            LocationDTO supportLocation,
+            LocationDTO convoyLocation
     ) {
         private Order toOrder() {
             return switch ($type) {
-                case "Move" -> new MoveOrder(destination, status, unit, location);
-                case "Support" -> new SupportOrder(destination, status, unit, location, supportLocation);
-                case "Convoy" -> new ConvoyOrder(destination, status, unit, location, convoyLocation);
-                case "Hold" -> new HoldOrder(status, unit, location);
-                case "Disband" -> new Disband(status, unit, location);
-                case "Build" -> new Build(status, unit, location);
+                case "Move" -> new MoveOrder(destination.toLocation(), status, unit, location.toLocation());
+                case "Support" -> new SupportOrder(destination.toLocation(), status, unit, location.toLocation(), supportLocation.toLocation());
+                case "Convoy" -> new ConvoyOrder(destination.toLocation(), status, unit, location.toLocation(), convoyLocation.toLocation());
+                case "Hold" -> new HoldOrder(status, unit, location.toLocation());
+                case "Disband" -> new Disband(status, unit, location.toLocation());
+                case "Build" -> new Build(status, unit, location.toLocation());
                 default -> throw new IllegalArgumentException("Invalid order type: "+ $type);
             };
+        }
+    }
+
+    private record LocationDTO(
+            int year,
+            String phase,
+            int timeline,
+            String region
+    ) {
+        Location toLocation() {
+            return new Location(new Location.Board(year, phase, timeline), region);
         }
     }
 

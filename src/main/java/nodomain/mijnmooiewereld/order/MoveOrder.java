@@ -11,6 +11,6 @@ public record MoveOrder(
 ) implements Order {
     @Override
     public String actionString() {
-        return "- " + destination().relativeBoardId(location);
+        return "- " + destination().relativeToString(location);
     }
 }

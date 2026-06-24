@@ -13,11 +13,11 @@ public record SupportOrder(
     @Override
     public String actionString() {
         if (supportLocation.equals(destination)) {
-            return "S " + destination.relativeBoardId(location);
-        } else if (location.isSameBoard(supportLocation)) {
-            return "S " + supportLocation + " - " + destination.relativeBoardId(location);
+            return "S " + destination.relativeToString(location);
+        } else if (location.board().isSameBoard(supportLocation.board())) {
+            return "S " + supportLocation + " - " + destination.relativeToString(location);
         } else {
-            return "S " + supportLocation.boardId() + " - " + destination.boardId();
+            return "S " + supportLocation.toLongString() + " - " + destination.toLongString();
         }
     }
 }

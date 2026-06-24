@@ -12,10 +12,10 @@ public record ConvoyOrder(
 ) implements Order {
     @Override
     public String actionString() {
-        if (location.isSameBoard(convoyLocation)) {
-            return "S " + convoyLocation + " - " + destination.relativeBoardId(location);
+        if (location.board().isSameBoard(convoyLocation.board())) {
+            return "S " + convoyLocation + " - " + destination.relativeToString(location);
         } else {
-            return "S " + convoyLocation.boardId() + " - " + destination.boardId();
+            return "S " + convoyLocation.toLongString() + " - " + destination.toLongString();
         }
 
     }

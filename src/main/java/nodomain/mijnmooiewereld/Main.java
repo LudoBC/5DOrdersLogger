@@ -31,7 +31,7 @@ public class Main {
 
     static void writeOrders(Stream<Order> orders, PrintWriter output) {
         orders.collect(groupingBy(Order::owner)).forEach((key, value) -> {
-            output.println("# " + key);
+            output.println("### " + key);
             value.stream().collect(groupingBy(Order::timeline)).values().forEach(ownedOrders -> {
                 int currentTurn = ownedOrders.stream().mapToInt(Order::turn).max().orElseThrow();
                 output.println("T" + ownedOrders.getFirst().timeline() + " " + Order.turnString(currentTurn) + ":");
