@@ -1,4 +1,4 @@
-package nodomain.mijnmooiewereld;
+package nodomain.mijnmooiewereld.orders.logger;
 
 public record Unit(
         String owner,

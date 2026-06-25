@@ -1,7 +1,7 @@
-package nodomain.mijnmooiewereld.order;
+package nodomain.mijnmooiewereld.orders.logger.order;
 
-import nodomain.mijnmooiewereld.Location;
-import nodomain.mijnmooiewereld.Unit;
+import nodomain.mijnmooiewereld.orders.logger.Location;
+import nodomain.mijnmooiewereld.orders.logger.Unit;
 
 public record Build(String status,
                     Unit unit,
@@ -14,6 +14,6 @@ public record Build(String status,
 
     @Override
     public String printableString() {
-        return "Build " + unit.type() + " " + location  + "\\";
+        return "Build " + unit.type() + " " + location;
     }
 }

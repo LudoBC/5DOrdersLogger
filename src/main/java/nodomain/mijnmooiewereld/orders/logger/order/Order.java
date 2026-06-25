@@ -1,7 +1,7 @@
-package nodomain.mijnmooiewereld.order;
+package nodomain.mijnmooiewereld.orders.logger.order;
 
-import nodomain.mijnmooiewereld.Location;
-import nodomain.mijnmooiewereld.Unit;
+import nodomain.mijnmooiewereld.orders.logger.Location;
+import nodomain.mijnmooiewereld.orders.logger.Unit;
 
 public interface Order {
     String status();
@@ -25,9 +25,9 @@ public interface Order {
     default String printableString() {
         String base = unit().type().charAt(0) + " " + location() + " " + actionString();
         if ("Failure".equals(status())) {
-            return "*"+base+"*" + "\\";
+            return "*"+base+"*";
         } else {
-           return base  + "\\";
+           return base;
         }
     }
 }

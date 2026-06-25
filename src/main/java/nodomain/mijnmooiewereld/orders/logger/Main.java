@@ -1,6 +1,6 @@
-package nodomain.mijnmooiewereld;
+package nodomain.mijnmooiewereld.orders.logger;
 
-import nodomain.mijnmooiewereld.order.Order;
+import nodomain.mijnmooiewereld.orders.logger.order.Order;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -31,7 +31,8 @@ public class Main {
     }
 
     static void writeOrders(List<Order> orders, PrintWriter output) {
-        var currentBoards = orders.stream().map(o -> o.location().board())
+        var currentBoards = orders.stream()
+                .map(o -> o.location().board())
                 .distinct()
                 .collect(groupingBy(Location.Board::timeline, maxBy(comparing(Location.Board::turn))));
         orders.stream()

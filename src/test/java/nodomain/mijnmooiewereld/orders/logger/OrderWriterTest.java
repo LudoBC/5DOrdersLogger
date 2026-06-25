@@ -1,6 +1,6 @@
-package nodomain.mijnmooiewereld;
+package nodomain.mijnmooiewereld.orders.logger;
 
-import nodomain.mijnmooiewereld.order.Order;
+import nodomain.mijnmooiewereld.orders.logger.order.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.PrintWriter;

@@ -1,4 +1,4 @@
-package nodomain.mijnmooiewereld;
+package nodomain.mijnmooiewereld.orders.logger;
 
 import org.jetbrains.annotations.NotNull;
 

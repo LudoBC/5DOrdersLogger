@@ -1,9 +1,9 @@
-package nodomain.mijnmooiewereld;
+package nodomain.mijnmooiewereld.orders.logger;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import nodomain.mijnmooiewereld.order.*;
+import nodomain.mijnmooiewereld.orders.logger.order.*;
 
 import java.io.IOException;
 import java.io.InputStream;
