@@ -30,20 +30,4 @@ public interface Order {
            return base;
         }
     }
-
-    int STARTING_YEAR = 1901;
-
-    default int turn() {
-        if ("Fall".equals(location().board().phase())) {
-            return 2 * (year() - STARTING_YEAR) + 1;
-        }
-        return 2 * (year() - STARTING_YEAR);
-    }
-
-    static String turnString(int turn) {
-        if (turn % 2 == 0) {
-            return "S"+(turn/2 + STARTING_YEAR);
-        }
-        return "F"+(turn/2 + STARTING_YEAR);
-    }
 }

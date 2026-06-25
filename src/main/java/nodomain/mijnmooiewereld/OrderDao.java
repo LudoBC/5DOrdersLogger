@@ -10,7 +10,6 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Stream;
 
 public enum OrderDao {
     ORDER_DAO;
@@ -56,11 +55,11 @@ public enum OrderDao {
         }
     }
 
-    public Stream<Order> getAllFromSource(Path path) {
+    public List<Order> getAllFromSource(Path path) {
         var mapper = new ObjectMapper();
         try (InputStream inputStream = Files.newInputStream(path)) {
             return mapper.readValue(inputStream, new TypeReference<OrdersDTO>() {})
-                    .orders().reversed().stream().map(OrderDTO::toOrder);
+                    .orders().reversed().stream().map(OrderDTO::toOrder).toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

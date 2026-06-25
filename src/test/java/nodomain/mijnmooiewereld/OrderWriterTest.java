@@ -1,5 +1,6 @@
 package nodomain.mijnmooiewereld;
 
+import nodomain.mijnmooiewereld.order.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.PrintWriter;
@@ -26,34 +27,33 @@ class OrderWriterTest {
     void testWriteOrders() {
         Path jsonPath = Path.of("src/test/resources/order.json");
 
-        try (var ordersStream = OrderDao.ORDER_DAO.getAllFromSource(jsonPath)) {
-            StringWriter sw = new StringWriter();
-            PrintWriter pw = new PrintWriter(sw);
+        List<Order> ordersList = OrderDao.ORDER_DAO.getAllFromSource(jsonPath);
+        StringWriter sw = new StringWriter();
+        PrintWriter pw = new PrintWriter(sw);
 
-            Main.writeOrders(ordersStream, pw);
+        Main.writeOrders(ordersList, pw);
 
-            String output = normalize(sw.toString());
+        String output = normalize(sw.toString());
 
-            List<String> expectedBlocks = Stream.of(
-                    """
-                    ### Russia
-                    T1 F1901:
-                    A Sev S Ukr - Rum
-                    T2 F1902:
-                    *F Bla - Ank*
-                    """,
-                    """
-                    ### England
-                    T1 F1901:
-                    F Nth S Bel - Lon
-                    """
-            ).map(this::normalize).toList();
+        List<String> expectedBlocks = Stream.of(
+                """
+                ### Russia
+                T1 F1901:
+                A Sev S Ukr - Rum
+                T2 F1902:
+                *F Bla - Ank*
+                """,
+                """
+                ### England
+                T1 F1901:
+                F Nth S Bel - Lon
+                """
+        ).map(this::normalize).toList();
 
-            expectedBlocks.forEach(block ->
-                    assertTrue(output.contains(block),
-                            () -> "Expected block not found:\n" + block + "\nActual output:\n" + output)
-            );
-        }
+        expectedBlocks.forEach(block ->
+                assertTrue(output.contains(block),
+                        () -> "Expected block not found:\n" + block + "\nActual output:\n" + output)
+        );
     }
 }
 

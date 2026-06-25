@@ -7,9 +7,11 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.List;
 
+import static java.util.Comparator.*;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.maxBy;
 
 public class Main {
     private static final String INPUT_LOCATION_OF_JSON_FILE = """
@@ -29,14 +31,21 @@ public class Main {
         }
     }
 
-    static void writeOrders(Stream<Order> orders, PrintWriter output) {
-        orders.collect(groupingBy(Order::owner)).forEach((key, value) -> {
+    static void writeOrders(List<Order> orders, PrintWriter output) {
+        var currentBoards = orders.stream().map(o -> o.location().board())
+                .distinct()
+                .collect(groupingBy(Location.Board::timeline, maxBy(comparing(Location.Board::turn))));
+        orders.stream()
+                .filter(o ->
+                        currentBoards.get(o.timeline())
+                                .filter(b -> b.equals(o.location().board()))
+                                .isPresent()
+                ).collect(groupingBy(Order::owner))
+                .forEach((key, value) -> {
             output.println("### " + key);
             value.stream().collect(groupingBy(Order::timeline)).values().forEach(ownedOrders -> {
-                int currentTurn = ownedOrders.stream().mapToInt(Order::turn).max().orElseThrow();
-                output.println("T" + ownedOrders.getFirst().timeline() + " " + Order.turnString(currentTurn) + ":");
+                output.println(ownedOrders.getFirst().location().board() + ":");
                 ownedOrders.stream()
-                        .filter(order -> order.turn() == currentTurn)
                         .map(Order::printableString)
                         .forEach(output::println);
             });
