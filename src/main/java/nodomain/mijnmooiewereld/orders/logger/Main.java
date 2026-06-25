@@ -32,25 +32,28 @@ public class Main {
 
     static void writeOrders(List<Order> orders, PrintWriter output) {
         var currentBoards = orders.stream()
-                .map(o -> o.location().board())
+                .map(Order::board)
                 .distinct()
-                .collect(groupingBy(Location.Board::timeline, maxBy(comparing(Location.Board::turn))));
+                .collect(groupingBy(Location.Board::timeline,
+                        maxBy(comparing(Location.Board::turn))));
         orders.stream()
                 .filter(o ->
                         currentBoards.get(o.timeline())
-                                .filter(b -> b.equals(o.location().board()))
+                                .filter(o.board()::equals)
                                 .isPresent()
                 ).collect(groupingBy(Order::owner))
-                .forEach((key, value) -> {
-            output.println("### " + key);
-            value.stream().collect(groupingBy(Order::timeline)).values().forEach(ownedOrders -> {
-                output.println(ownedOrders.getFirst().location().board() + ":\\");
-                output.println(ownedOrders.stream()
-                        .map(Order::printableString)
-                        .collect(joining("\\"+System.lineSeparator())));
-                output.println();
-            });
-            output.println();
-        });
+                .forEach((owner, ownedOrders) -> {
+                    output.println("### " + owner);
+                    ownedOrders.stream()
+                            .collect(groupingBy(Order::timeline))
+                            .values().forEach(timelineOrders -> {
+                                output.println(timelineOrders.getFirst().board() + ":\\");
+                                output.println(timelineOrders.stream()
+                                        .map(Order::printableString)
+                                        .collect(joining("\\"+System.lineSeparator())));
+                                output.println();
+                            });
+                    output.println();
+                });
     }
 }

@@ -8,12 +8,16 @@ public interface Order {
     Unit unit();
     Location location();
 
+    default Location.Board board() {
+        return location().board();
+    }
+
     default int timeline() {
-        return location().board().timeline();
+        return board().timeline();
     }
 
     default int year() {
-        return location().board().year();
+        return board().year();
     }
 
     default String owner() {
