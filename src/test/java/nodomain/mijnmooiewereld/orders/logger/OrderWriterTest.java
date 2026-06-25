@@ -39,7 +39,7 @@ class OrderWriterTest {
                 """
                 ### Russia
                 T1F'01:\\
-                F Sev S Ukr - Rum
+                F Sev S U Ukr - Rum
                 
                 T2F'01:\\
                 *F Sev - Bla*
@@ -47,7 +47,7 @@ class OrderWriterTest {
                 """
                 ### England
                 T1F'01:\\
-                F Nth C T2F'01 Lon - T1F'01 Bel
+                F Nth C A T2F'01 Lon - T1F'01 Bel
                 
                 T2F'01:\\
                 A Lon - T1F'01 Bel

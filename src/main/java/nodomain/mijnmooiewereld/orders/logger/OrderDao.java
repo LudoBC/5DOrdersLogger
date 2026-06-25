@@ -25,11 +25,15 @@ public enum OrderDao {
     private record BoardDTO(
             int timeline,
             int year,
-            String Phase,
+            String phase,
             List<Integer> childTimelines,
             Map<String, String> centers,
             Map<String, Unit> units
-    ) {}
+    ) {
+        private boolean match(LocationDTO location) {
+            return timeline == location.timeline && year == location.year && phase.equals(location.phase);
+        }
+    }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private record OrderDTO(
@@ -41,16 +45,27 @@ public enum OrderDao {
             LocationDTO supportLocation,
             LocationDTO convoyLocation
     ) {
-        private Order toOrder() {
+        private Order toOrder(List<BoardDTO> boards) {
             return switch ($type) {
                 case "Move" -> new MoveOrder(destination.toLocation(), status, unit, location.toLocation());
-                case "Support" -> new SupportOrder(destination.toLocation(), status, unit, location.toLocation(), supportLocation.toLocation());
+                case "Support" -> new SupportOrder(destination.toLocation(), status, unit, location.toLocation(),
+                        supportLocation.toLocation(), findSupportedUnit(supportLocation, boards));
                 case "Convoy" -> new ConvoyOrder(destination.toLocation(), status, unit, location.toLocation(), convoyLocation.toLocation());
                 case "Hold" -> new HoldOrder(status, unit, location.toLocation());
                 case "Disband" -> new Disband(status, unit, location.toLocation());
                 case "Build" -> new Build(status, unit, location.toLocation());
                 default -> throw new IllegalArgumentException("Invalid order type: "+ $type);
             };
+        }
+
+        private static final Unit UNOWNED_UNIT = new Unit("unowned", "Unit", false);
+
+        private Unit findSupportedUnit(LocationDTO location, List<BoardDTO> boards) {
+            return boards.stream()
+                    .filter(b -> b.match(location))
+                    .findFirst()
+                    .map(b -> b.units.get(location.region))
+                    .orElse(UNOWNED_UNIT);
         }
     }
 
@@ -68,8 +83,8 @@ public enum OrderDao {
     public List<Order> getAllFromSource(Path path) {
         var mapper = new ObjectMapper();
         try (InputStream inputStream = Files.newInputStream(path)) {
-            return mapper.readValue(inputStream, new TypeReference<OrdersDTO>() {})
-                    .orders().reversed().stream().map(OrderDTO::toOrder).toList();
+            OrdersDTO orders = mapper.readValue(inputStream, new TypeReference<>() {});
+            return orders.orders().reversed().stream().map(o -> o.toOrder(orders.boards)).toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

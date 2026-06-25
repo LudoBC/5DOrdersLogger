@@ -1,5 +1,6 @@
 {
   "iteration": 4,
+  "boards" : [],
   "orders": [
     {
       "$type": "Move",
