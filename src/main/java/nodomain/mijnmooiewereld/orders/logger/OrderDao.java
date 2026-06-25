@@ -10,16 +10,26 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 public enum OrderDao {
     ORDER_DAO;
 
-    @JsonIgnoreProperties(ignoreUnknown = true)
     private record OrdersDTO(
             int iteration,
+            List<BoardDTO> boards,
             List<OrderDTO> orders
     ) {
     }
+
+    private record BoardDTO(
+            int timeline,
+            int year,
+            String Phase,
+            List<Integer> childTimelines,
+            Map<String, String> centers,
+            Map<String, Unit> units
+    ) {}
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     private record OrderDTO(
