@@ -48,8 +48,8 @@ public enum OrderDao {
         private Order toOrder(List<BoardDTO> boards) {
             return switch ($type) {
                 case "Move" -> new MoveOrder(destination.toLocation(), status, unit, location.toLocation());
-                case "Support" -> new SupportOrder(destination.toLocation(), status, unit, location.toLocation(),
-                        supportLocation.toLocation(), findSupportedUnit(supportLocation, boards));
+                case "Support" -> new SupportOrder(destination.toLocation(), status, unit,
+                        location.toLocation(), supportLocation.toLocation(), findSupportedUnit(boards));
                 case "Convoy" -> new ConvoyOrder(destination.toLocation(), status, unit, location.toLocation(), convoyLocation.toLocation());
                 case "Hold" -> new HoldOrder(status, unit, location.toLocation());
                 case "Disband" -> new Disband(status, unit, location.toLocation());
@@ -58,14 +58,12 @@ public enum OrderDao {
             };
         }
 
-        private static final Unit UNOWNED_UNIT = new Unit("unowned", "Unit", false);
-
-        private Unit findSupportedUnit(LocationDTO location, List<BoardDTO> boards) {
+        private Unit findSupportedUnit(List<BoardDTO> boards) {
             return boards.stream()
-                    .filter(b -> b.match(location))
+                    .filter(b -> b.match(supportLocation))
                     .findFirst()
-                    .map(b -> b.units.get(location.region))
-                    .orElse(UNOWNED_UNIT);
+                    .map(b -> b.units.get(supportLocation.region))
+                    .orElse(Province.associatedUnit(supportLocation.region(), destination().region()));
         }
     }
 
