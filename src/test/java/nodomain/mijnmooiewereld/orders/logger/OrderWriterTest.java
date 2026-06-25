@@ -31,7 +31,8 @@ class OrderWriterTest {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
 
-        Main.writeOrders(ordersList, pw);
+        Main.filterOrdersAndSortByPower(ordersList).values()
+                .forEach(ownedOrders -> Main.writeOrdersPerPower(pw, ownedOrders));
 
         String output = normalize(sw.toString());
 
