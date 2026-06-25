@@ -13,13 +13,13 @@ public record SupportOrder(
 ) implements Order {
     @Override
     public String actionString() {
-        String base = "S " + supportedUnit.type().charAt(0) + " ";
+        char supportedUnitType = supportedUnit.type().charAt(0);
         if (supportLocation.equals(destination)) {
-            return base + destination.relativeToString(location) + " H";
+            return "S " + destination.relativeToString(location, supportedUnitType) + " H";
         } else if (location.board().isSameBoard(supportLocation.board())) {
-            return base + supportLocation + " - " + destination.relativeToString(location);
+            return "S " + supportLocation.toString(supportedUnitType) + " - " + destination.relativeToString(location);
         } else {
-            return base + supportLocation.toLongString() + " - " + destination.toLongString();
+            return "S " + supportLocation.toLongString(supportedUnitType) + " - " + destination.toLongString();
         }
     }
 }

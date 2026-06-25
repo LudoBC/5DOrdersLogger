@@ -15,7 +15,7 @@ public record ConvoyOrder(
         if (location.board().isSameBoard(convoyLocation.board())) {
             return "C A " + convoyLocation + " - " + destination.relativeToString(location);
         } else {
-            return "C A " + convoyLocation.toLongString() + " - " + destination.toLongString();
+            return "C " + convoyLocation.toLongString('A') + " - " + destination.toLongString();
         }
     }
 }
