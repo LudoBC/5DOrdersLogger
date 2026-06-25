@@ -10,8 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Comparator.*;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.maxBy;
+import static java.util.stream.Collectors.*;
 
 public class Main {
     private static final String INPUT_LOCATION_OF_JSON_FILE = """
@@ -44,10 +43,11 @@ public class Main {
                 .forEach((key, value) -> {
             output.println("### " + key);
             value.stream().collect(groupingBy(Order::timeline)).values().forEach(ownedOrders -> {
-                output.println(ownedOrders.getFirst().location().board() + ":");
-                ownedOrders.stream()
+                output.println(ownedOrders.getFirst().location().board() + ":\\");
+                output.println(ownedOrders.stream()
                         .map(Order::printableString)
-                        .forEach(output::println);
+                        .collect(joining("\\"+System.lineSeparator())));
+                output.println();
             });
             output.println();
         });
