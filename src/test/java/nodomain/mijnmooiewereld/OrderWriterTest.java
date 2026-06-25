@@ -39,14 +39,16 @@ class OrderWriterTest {
                 """
                 ### Russia
                 T1 F1901:
-                A Sev S Ukr - Rum
-                T2 F1902:
-                *F Bla - Ank*
+                F Sev S Ukr - Rum
+                T2 F1901:
+                *F Sev - Bla*
                 """,
                 """
                 ### England
                 T1 F1901:
-                F Nth S Bel - Lon
+                F Nth C T2 F1901 Lon - T1 F1901 Bel
+                T2 F1901:
+                A Lon - T1 F1901 Bel
                 """
         ).map(this::normalize).toList();
 

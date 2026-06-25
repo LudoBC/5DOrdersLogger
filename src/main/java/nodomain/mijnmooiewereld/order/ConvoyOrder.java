@@ -13,9 +13,9 @@ public record ConvoyOrder(
     @Override
     public String actionString() {
         if (location.board().isSameBoard(convoyLocation.board())) {
-            return "S " + convoyLocation + " - " + destination.relativeToString(location);
+            return "C " + convoyLocation + " - " + destination.relativeToString(location);
         } else {
-            return "S " + convoyLocation.toLongString() + " - " + destination.toLongString();
+            return "C " + convoyLocation.toLongString() + " - " + destination.toLongString();
         }
 
     }
