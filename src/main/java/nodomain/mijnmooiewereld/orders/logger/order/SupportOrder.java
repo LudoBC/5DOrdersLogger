@@ -15,11 +15,11 @@ public record SupportOrder(
     public String actionString() {
         String base = "S " + supportedUnit.type().charAt(0) + " ";
         if (supportLocation.equals(destination)) {
-            return base + " " + supportedUnit.type().charAt(0) + " " + destination.relativeToString(location) + " H";
+            return base + destination.relativeToString(location) + " H";
         } else if (location.board().isSameBoard(supportLocation.board())) {
-            return base + supportedUnit.type().charAt(0) + " " + supportLocation + " - " + destination.relativeToString(location);
+            return base + supportLocation + " - " + destination.relativeToString(location);
         } else {
-            return base + supportedUnit.type().charAt(0) + " " + supportLocation.toLongString() + " - " + destination.toLongString();
+            return base + supportLocation.toLongString() + " - " + destination.toLongString();
         }
     }
 }
