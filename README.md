@@ -21,6 +21,7 @@ The tool reads the adjudicator's JSON results, groups and formats orders by **ow
     - Build
     - Disband
 - Marks failed orders by italicising
+- When the unit-type of a support cannot be inferred, a 'U' is used as the abbreviation
 - Outputs clean, human-readable Markdown
 
 ---
@@ -44,11 +45,11 @@ You can run the tool in two ways:
 
 1. Provide JSON file path as an argument
 ```Bash
-java -jar target/OrdersLogger-1.0-jar-with-dependencies.jar /path/to/results.json
+java -jar target/OrdersLogger-1.1-jar-with-dependencies.jar /path/to/results.json
 ```
 2. Run without arguments (interactive prompt)
 ```Bash
-java -jar target/OrdersLogger-1.0-jar-with-dependencies.jar
+java -jar target/OrdersLogger-1.1-jar-with-dependencies.jar
 ```
 You will be prompted:
 

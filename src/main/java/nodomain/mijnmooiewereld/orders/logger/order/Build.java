@@ -8,11 +8,6 @@ public record Build(String status,
                     Location location
 ) implements Order {
     @Override
-    public String actionString() {
-        return "";
-    }
-
-    @Override
     public String printableString() {
         return "Build " + unit.type() + " " + location;
     }

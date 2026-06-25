@@ -8,16 +8,18 @@ public record SupportOrder(
         String status,
         Unit unit,
         Location location,
-        Location supportLocation
+        Location supportLocation,
+        Unit supportedUnit
 ) implements Order {
     @Override
     public String actionString() {
+        char supportedUnitType = supportedUnit.type().charAt(0);
         if (supportLocation.equals(destination)) {
-            return "S " + destination.relativeToString(location) + " H";
+            return "S " + destination.relativeToString(location, supportedUnitType) + " H";
         } else if (location.board().isSameBoard(supportLocation.board())) {
-            return "S " + supportLocation + " - " + destination.relativeToString(location);
+            return "S " + supportLocation.toString(supportedUnitType) + " - " + destination.relativeToString(location);
         } else {
-            return "S " + supportLocation.toLongString() + " - " + destination.toLongString();
+            return "S " + supportLocation.toLongString(supportedUnitType) + " - " + destination.toLongString();
         }
     }
 }

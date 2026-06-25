@@ -35,9 +35,18 @@ public record Location(
         return region;
     }
 
+    public @NotNull String toString(char unitType) {
+        return unitType + " " + region;
+    }
+
     public String toLongString() {
         return board + " " + region;
     }
+
+    public String toLongString(char unitType) {
+        return board + " " + unitType + " " + region;
+    }
+
 
     public String relativeToString(Location to) {
         if (board.isSameBoard(to.board)) {
@@ -45,5 +54,13 @@ public record Location(
         }
         return toLongString();
     }
+
+    public String relativeToString(Location to, char unitType) {
+        if (board.isSameBoard(to.board)) {
+            return toString(unitType);
+        }
+        return toLongString(unitType);
+    }
+
 }
 

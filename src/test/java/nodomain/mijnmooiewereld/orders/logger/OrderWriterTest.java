@@ -31,7 +31,8 @@ class OrderWriterTest {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
 
-        Main.writeOrders(ordersList, pw);
+        Main.filterOrdersAndSortByPower(ordersList).values()
+                .forEach(ownedOrders -> Main.writeOrdersPerPower(pw, ownedOrders));
 
         String output = normalize(sw.toString());
 
@@ -39,18 +40,20 @@ class OrderWriterTest {
                 """
                 ### Russia
                 T1F'01:\\
-                F Sev S Ukr - Rum
+                A Ukr - Rum\\
+                F Sev S A Ukr - Rum
                 
                 T2F'01:\\
-                *F Sev - Bla*
+                *F Sev - Bla*\\
+                *A Ukr S T2S'02 A Ukr - T2S'02 Rum*
                 """,
                 """
                 ### England
                 T1F'01:\\
-                F Nth C T2F'01 Lon - T1F'01 Bel
+                F Nth C T2F'01 A Yor - T1F'01 Bel
                 
                 T2F'01:\\
-                A Lon - T1F'01 Bel
+                A Yor - T1F'01 Bel
                 """
         ).map(this::normalize).toList();
 
