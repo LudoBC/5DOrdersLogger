@@ -15,7 +15,7 @@ public record Disband(
 
     @Override
     public String printableString() {
-        return "Disband " + unit.type() + " " + location;
+        return "Disband " + unit.type() + " " + location  + "\\";
     }
 
 }
