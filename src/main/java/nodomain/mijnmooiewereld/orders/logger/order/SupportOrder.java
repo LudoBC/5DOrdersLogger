@@ -13,7 +13,7 @@ public record SupportOrder(
     @Override
     public String actionString() {
         if (supportLocation.equals(destination)) {
-            return "S " + destination.relativeToString(location);
+            return "S " + destination.relativeToString(location) + " H";
         } else if (location.board().isSameBoard(supportLocation.board())) {
             return "S " + supportLocation + " - " + destination.relativeToString(location);
         } else {

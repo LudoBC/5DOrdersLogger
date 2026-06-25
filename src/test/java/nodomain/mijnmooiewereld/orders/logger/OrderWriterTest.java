@@ -38,19 +38,19 @@ class OrderWriterTest {
         List<String> expectedBlocks = Stream.of(
                 """
                 ### Russia
-                T1 F1901:\\
+                T1F'01:\\
                 F Sev S Ukr - Rum
                 
-                T2 F1901:\\
+                T2F'01:\\
                 *F Sev - Bla*
                 """,
                 """
                 ### England
-                T1 F1901:\\
-                F Nth C T2 F1901 Lon - T1 F1901 Bel
+                T1F'01:\\
+                F Nth C T2F'01 Lon - T1F'01 Bel
                 
-                T2 F1901:\\
-                A Lon - T1 F1901 Bel
+                T2F'01:\\
+                A Lon - T1F'01 Bel
                 """
         ).map(this::normalize).toList();
 

@@ -18,7 +18,7 @@ public record Location(
         }
 
         public @NotNull String toString() {
-            return "T"+timeline+" "+phase.charAt(0)+year;
+            return "T"+timeline+phase.charAt(0)+Integer.toString(year).replace("19", "'");
         }
 
         public int turn() {
