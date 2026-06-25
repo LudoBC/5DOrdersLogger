@@ -9,11 +9,6 @@ public record Disband(
         Location location
 ) implements Order {
     @Override
-    public String actionString() {
-        return "";
-    }
-
-    @Override
     public String printableString() {
         return "Disband " + unit.type() + " " + location;
     }

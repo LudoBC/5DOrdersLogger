@@ -17,6 +17,5 @@ public record ConvoyOrder(
         } else {
             return "C " + convoyLocation.toLongString() + " - " + destination.toLongString();
         }
-
     }
 }

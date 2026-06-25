@@ -24,7 +24,9 @@ public interface Order {
         return unit().owner();
     }
 
-    String actionString();
+    default String actionString() {
+        throw new UnsupportedOperationException();
+    }
 
     default String printableString() {
         String base = unit().type().charAt(0) + " " + location() + " " + actionString();
