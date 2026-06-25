@@ -1,13 +1,13 @@
 ### Austria
 T1F'04:\
-A Tri S U T1S'05 Bud - T1S'05 Tri\
+A Tri S T1S'05 A Bud - T1S'05 Tri\
 A Bud S A Tri H\
 A Vie S A Boh - Tyr\
 *F Alb - ION*\
 A Boh - Tyr
 
 T2S'04:\
-A Kie S U T2F'04 Kie H\
+A Kie S T2F'04 U Kie H\
 *A Bud - Tri*\
 *A Tyr - T2F'03 Tyr*
 
@@ -31,12 +31,12 @@ T6F'03:\
 T7F'03:\
 *A Tyr S A Tri H*\
 *F Alb S F ION - ADR*\
-*A Tri S A T6F'03 Vie - T6F'03 Tri*\
+*A Tri S T6F'03 A Vie - T6F'03 Tri*\
 *A Bul - Gre*\
 *F ION - ADR*
 
 T8F'03:\
-A Ber S U T8S'04 Ber H\
+A Ber S T8S'04 U Ber H\
 *A Gal - War*
 
 T9W'03:\
@@ -80,8 +80,8 @@ A Bul Holds
 
 T7F'03:\
 F AEG S A Smy H\
-F Con S A T6F'03 Ank - T7F'03 Ank\
-A Smy S A T6F'03 Ank - T7F'03 Ank\
+F Con S T6F'03 A Ank - T7F'03 Ank\
+A Smy S T6F'03 A Ank - T7F'03 Ank\
 *A Gre - Alb*
 
 T8F'03:\
@@ -125,7 +125,7 @@ Build Army Lon
 
 T6F'03:\
 A Yor Holds\
-F NTH S F T7F'03 ENG - T7F'03 NTH\
+F NTH S T7F'03 F ENG - T7F'03 NTH\
 *F Wal - ENG*\
 *F Den - T5F'03 Den*\
 A Swe - Lvn\
@@ -154,8 +154,8 @@ F Stp_N - T9F'03 Stp_N
 
 ### Italy
 T1F'04:\
-A Nap S U T1S'05 Nap H\
-A Tus S U T1S'05 Tus H\
+A Nap S T1S'05 U Nap H\
+A Tus S T1S'05 U Tus H\
 *A Ven S A Tyr - Tri*\
 *F ADR - ION*
 
@@ -169,7 +169,7 @@ F ADR - ION\
 A Rum - Bud
 
 T3S'04:\
-A Nap S U T3F'04 Nap H\
+A Nap S T3F'04 U Nap H\
 *A Ven S A Pie - Tyr*\
 A Apu - Rom\
 A Rom - Tus
@@ -183,7 +183,7 @@ T5W'03:\
 Disband Army Apu
 
 T6F'03:\
-F ION S F T7F'03 ADR - T7F'03 ION\
+F ION S T7F'03 F ADR - T7F'03 ION\
 A Gre S A Ser H\
 A Tri S A Bud - Vie\
 A Ven S A Tri H\
@@ -199,8 +199,8 @@ F ADR - ION
 
 T8F'03:\
 A Ser S A Bul - Rum\
-F Tun S F T7F'03 Tun H\
-F TYS S F T7F'03 Nap - T7F'03 TYS\
+F Tun S T7F'03 F Tun H\
+F TYS S T7F'03 F Nap - T7F'03 TYS\
 A Tri S A Bud H\
 A Rom - Ven\
 A Ven - Tyr\
@@ -213,7 +213,7 @@ Disband Fleet Tun
 T10F'03:\
 A Tri Holds\
 A Apu S A Nap H\
-A Nap S U T10S'04 Nap H\
+A Nap S T10S'04 U Nap H\
 F Tun S F ADR - ION\
 A Ven S A Tri H\
 F ADR - ION
@@ -256,8 +256,8 @@ A Pie - Tyr\
 *F Pic - ENG*
 
 T7F'03:\
-A Pic S U T7S'04 Pic H\
-A Par S U T7S'04 Par H\
+A Pic S T7S'04 U Pic H\
+A Par S T7S'04 A Par H\
 F WES S F Tun H\
 A Mar - Pie\
 F MAO - NAO\
@@ -275,7 +275,7 @@ Build Fleet Bre
 T10F'03:\
 F Bre Holds\
 A Mar S A Pie H\
-A Pie S A T8F'03 Pie - T9F'03 Pie\
+A Pie S T8F'03 A Pie - T9F'03 Pie\
 F WES S F Tun H\
 A Pic - Par
 
@@ -335,7 +335,7 @@ F BAL - Kie\
 
 T2S'04:\
 F BLA S A Sev H\
-A Sev S A T1S'04 Sev H\
+A Sev S T1S'04 A Sev H\
 A Sil S A Ber H\
 A Ber S A Kie H
 
@@ -360,17 +360,17 @@ T6F'03:\
 
 T7F'03:\
 Disband Fleet Ank\
-A Sil S A T8F'03 Mun - T7F'03 Mun\
+A Sil S T8F'03 A Mun - T7F'03 Mun\
 A Arm S F Ank H\
 *F Nwy S F Den - NTH*\
-*F Ank S F T6F'03 BLA - T6F'03 Ank*\
+*F Ank S T6F'03 F BLA - T6F'03 Ank*\
 *F BOT - T7S'03 BOT*\
 F Sev - BLA\
 A Rum - Ser\
 *F Den - NTH*
 
 T8F'03:\
-F BLA S F T7F'03 Sev - T7F'03 BLA\
+F BLA S T7F'03 F Sev - T7F'03 BLA\
 *A Stp - Nwy*\
 *A Pru - War*\
 F HEL - Hol\
@@ -382,7 +382,7 @@ T9W'03:\
 Disband Army Mos
 
 T10F'03:\
-A Pru S U T10S'04 Pru H\
+A Pru S T10S'04 U Pru H\
 A Arm S A Sev - Ank\
 *F Nwy S F Den - NTH*\
 A Rum - Bud\
