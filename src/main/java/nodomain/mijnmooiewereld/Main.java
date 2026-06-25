@@ -44,10 +44,11 @@ public class Main {
                 .forEach((key, value) -> {
             output.println("### " + key);
             value.stream().collect(groupingBy(Order::timeline)).values().forEach(ownedOrders -> {
-                output.println(ownedOrders.getFirst().location().board() + ":");
+                output.println(ownedOrders.getFirst().location().board() + ":\\");
                 ownedOrders.stream()
                         .map(Order::printableString)
                         .forEach(output::println);
+                output.println();
             });
             output.println();
         });

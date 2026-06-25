@@ -25,9 +25,9 @@ public interface Order {
     default String printableString() {
         String base = unit().type().charAt(0) + " " + location() + " " + actionString();
         if ("Failure".equals(status())) {
-            return "*"+base+"*";
+            return "*"+base+"*" + "\\";
         } else {
-           return base;
+           return base  + "\\";
         }
     }
 }

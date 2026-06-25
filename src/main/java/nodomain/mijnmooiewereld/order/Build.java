@@ -14,6 +14,6 @@ public record Build(String status,
 
     @Override
     public String printableString() {
-        return "Build " + unit.type() + " " + location;
+        return "Build " + unit.type() + " " + location  + "\\";
     }
 }
