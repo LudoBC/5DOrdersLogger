@@ -30,7 +30,7 @@ public class Main {
         CheckedSupplier<InputStream, IOException> inputStreamSupplier;
         Path outputPath;
 
-        if (input.startsWith("http") || input.startsWith("blob")) {
+        if (input.startsWith("http")) {
             URL url = new URL(input);
             inputStreamSupplier = url::openStream;
             outputPath = Path.of("orderlog.md");
@@ -44,7 +44,12 @@ public class Main {
         }
 
         if (Files.exists(outputPath)) {
-            Files.delete(outputPath);
+            String wantToDelete = IO.readln("A file already exists at "
+                    + outputPath.toAbsolutePath()
+                    + ". Would you like to remove it? [Y, n]");
+            if (wantToDelete.isBlank() || List.of('y', 'Y').contains(wantToDelete.charAt(0))) {
+                Files.delete(outputPath);
+            }
         }
         Files.createFile(outputPath);
 
