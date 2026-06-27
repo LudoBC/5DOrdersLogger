@@ -21,15 +21,19 @@ public class Main {
             This file can be obtained from the 5D diplomacy adjudicator.
             """;
 
-    static void main(String[] args) throws IOException {
+    static void main(String... args) throws IOException {
         Path input = Path.of(Arrays.stream(args).findFirst().orElseGet(() -> IO.readln(INPUT_LOCATION_OF_JSON_FILE)));
+        
         if (! input.toString().endsWith(".json")) throw new IllegalArgumentException("A path to a Json file must be input");
         Path output = input.resolve("..")
                 .resolve(input.getFileName().toString().replace(".json", ".md"))
                 .normalize();
         Files.createFile(output);
-        try (var toOutput = new PrintWriter(Files.newBufferedWriter(output))) {
-            filterOrdersAndSortByPower(OrderDao.ORDER_DAO.getAllFromSource(input)).values()
+        try (
+                var toOutput = new PrintWriter(Files.newBufferedWriter(output));
+                var inputStream = Files.newInputStream(input)
+        ) {
+            filterOrdersAndSortByPower(OrderDao.ORDER_DAO.getAllFromSource(inputStream)).values()
                     .forEach(ownedOrders -> writeOrdersPerPower(toOutput, ownedOrders));
         }
     }

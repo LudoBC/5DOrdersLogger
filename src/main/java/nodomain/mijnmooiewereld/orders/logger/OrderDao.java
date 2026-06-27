@@ -63,7 +63,7 @@ public enum OrderDao {
                     .filter(b -> b.match(supportLocation))
                     .findFirst()
                     .map(b -> b.units.get(supportLocation.region))
-                    .orElse(Province.associatedUnit(supportLocation.region(), destination().region()));
+                    .orElseGet(() -> Province.associatedUnit(supportLocation.region(), destination().region()));
         }
     }
 
@@ -78,14 +78,10 @@ public enum OrderDao {
         }
     }
 
-    public List<Order> getAllFromSource(Path path) {
+    public List<Order> getAllFromSource(InputStream inputStream) {
         var mapper = new ObjectMapper();
-        try (InputStream inputStream = Files.newInputStream(path)) {
-            OrdersDTO orders = mapper.readValue(inputStream, new TypeReference<>() {});
-            return orders.orders().reversed().stream().map(o -> o.toOrder(orders.boards)).toList();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        OrdersDTO orders = mapper.readValue(inputStream, new TypeReference<>() {});
+        return orders.orders().reversed().stream().map(o -> o.toOrder(orders.boards)).toList();
     }
 
 }

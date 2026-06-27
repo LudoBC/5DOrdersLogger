@@ -3,8 +3,10 @@ package nodomain.mijnmooiewereld.orders.logger;
 import nodomain.mijnmooiewereld.orders.logger.order.Order;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +26,10 @@ class OrderWriterTest {
     }
 
     @Test
-    void testWriteOrders() {
+    void testWriteOrders() throws IOException {
         Path jsonPath = Path.of("src/test/resources/order.json");
 
-        List<Order> ordersList = OrderDao.ORDER_DAO.getAllFromSource(jsonPath);
+        List<Order> ordersList = OrderDao.ORDER_DAO.getAllFromSource(Files.newInputStream(jsonPath));
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
 
