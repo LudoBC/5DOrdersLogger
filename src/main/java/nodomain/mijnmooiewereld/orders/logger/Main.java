@@ -49,14 +49,14 @@ public class Main {
     }
 
     static void writeOrdersPerPower(PrintWriter output, List<Order> ownedOrders) {
-        output.println("### " + ownedOrders.getFirst().unit().owner());
+        output.println("## " + ownedOrders.getFirst().unit().owner().toUpperCase());
         ownedOrders.stream()
                 .collect(groupingBy(Order::timeline))
                 .values().forEach(orders -> {
-                    output.println(orders.getFirst().board() + ":\\");
+                    output.println("### " + orders.getFirst().board() + ":");
                     output.println(orders.stream()
-                            .map(Order::printableString)
-                            .collect(joining("\\"+System.lineSeparator())));
+                            .map(order -> "- " + order.printableString())
+                            .collect(joining(System.lineSeparator())));
                     output.println();
                 });
         output.println();
