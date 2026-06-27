@@ -30,7 +30,7 @@ public class Main {
         CheckedSupplier<InputStream, IOException> inputStreamSupplier;
         Path outputPath;
 
-        if (input.startsWith("http")) {
+        if (input.startsWith("http") || input.startsWith("blob")) {
             URL url = new URL(input);
             inputStreamSupplier = url::openStream;
             outputPath = Path.of("orderlog.md");
@@ -43,6 +43,9 @@ public class Main {
                     .normalize();
         }
 
+        if (Files.exists(outputPath)) {
+            Files.delete(outputPath);
+        }
         Files.createFile(outputPath);
 
         try (
