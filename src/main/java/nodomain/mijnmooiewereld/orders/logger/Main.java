@@ -1,9 +1,12 @@
 package nodomain.mijnmooiewereld.orders.logger;
 
 import nodomain.mijnmooiewereld.orders.logger.order.Order;
+import nodomain.mijnmooiewereld.utils.CheckedSupplier;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -17,21 +20,34 @@ public class Main {
     private Main() {}
 
     private static final String INPUT_LOCATION_OF_JSON_FILE = """
-            Please input the location on the local file system of the .json file containing the results to be turned into the orders log.
-            This file can be obtained from the 5D diplomacy adjudicator.
+            Please input the location of the .json file containing the results to be turned into the orders log.
+            The location must either a path on the local file system, or a web page.
+            The correct file can be obtained from the 5D diplomacy adjudicator.
             """;
 
     static void main(String... args) throws IOException {
-        Path input = Path.of(Arrays.stream(args).findFirst().orElseGet(() -> IO.readln(INPUT_LOCATION_OF_JSON_FILE)));
-        
-        if (! input.toString().endsWith(".json")) throw new IllegalArgumentException("A path to a Json file must be input");
-        Path output = input.resolve("..")
-                .resolve(input.getFileName().toString().replace(".json", ".md"))
-                .normalize();
-        Files.createFile(output);
+        String input = Arrays.stream(args).findFirst().orElseGet(() -> IO.readln(INPUT_LOCATION_OF_JSON_FILE));
+        CheckedSupplier<InputStream, IOException> inputStreamSupplier;
+        Path outputPath;
+
+        if (input.startsWith("http")) {
+            URL url = new URL(input);
+            inputStreamSupplier = url::openStream;
+            outputPath = Path.of("orderlog.md");
+        } else {
+            if (! input.endsWith(".json")) throw new IllegalArgumentException("A path to a Json file must be input");
+            Path inputPath = Path.of(input);
+            inputStreamSupplier = () -> Files.newInputStream(inputPath);
+            outputPath = inputPath.resolve("..")
+                    .resolve(inputPath.getFileName().toString().replace(".json", ".md"))
+                    .normalize();
+        }
+
+        Files.createFile(outputPath);
+
         try (
-                var toOutput = new PrintWriter(Files.newBufferedWriter(output));
-                var inputStream = Files.newInputStream(input)
+                var toOutput = new PrintWriter(Files.newBufferedWriter(outputPath));
+                var inputStream = inputStreamSupplier.get()
         ) {
             filterOrdersAndSortByPower(OrderDao.ORDER_DAO.getAllFromSource(inputStream)).values()
                     .forEach(ownedOrders -> writeOrdersPerPower(toOutput, ownedOrders));
