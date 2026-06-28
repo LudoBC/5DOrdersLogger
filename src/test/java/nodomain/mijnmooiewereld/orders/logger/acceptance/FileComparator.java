@@ -1,4 +1,4 @@
-package nodomain.mijnmooiewereld.orders.logger;
+package nodomain.mijnmooiewereld.orders.logger.acceptance;
 
 import java.io.FileInputStream;
 import java.io.IOException;

@@ -19,13 +19,13 @@ import static java.util.stream.Collectors.*;
 public class Main {
     private Main() {}
 
-    private static final String INPUT_LOCATION_OF_JSON_FILE = """
+    static final String INPUT_LOCATION_OF_JSON_FILE = """
             Please input the location of the .json file containing the results to be turned into the orders log.
             The location must either a path on the local file system, or a web page.
             The correct file can be obtained from the 5D diplomacy adjudicator.
             """;
 
-    static void main(String... args) throws IOException {
+    public static void main(String... args) throws IOException {
         String input = Arrays.stream(args).findFirst().orElseGet(() -> IO.readln(INPUT_LOCATION_OF_JSON_FILE));
         CheckedSupplier<InputStream, IOException> inputStreamSupplier;
         Path outputPath;

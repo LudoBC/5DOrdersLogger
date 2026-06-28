@@ -45,11 +45,14 @@ You can run the tool in two ways:
 
 1. Provide JSON file path or http web page as an argument
 ```Bash
-java -jar target/OrdersLogger-1.2-jar-with-dependencies.jar /path/to/results.json
+java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar /path/to/results.json
+```
+```Bash
+java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar http://host:port/jsonsite
 ```
 2. Run without arguments (interactive prompt)
 ```Bash
-java -jar target/OrdersLogger-1.2-jar-with-dependencies.jar
+java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar
 ```
 You will be prompted:
 
@@ -75,6 +78,12 @@ Run Unit Tests
 ```Bash
 mvn test
 ```
+Rum pitest mutation tests
+```Bash
+mvn test-compile pitest:mutationCoverage
+```
+The resulting rapports can be read in 
+```./target/pit-reports/index.html```.
 
 ### License
 This project is licensed under the MIT License.
