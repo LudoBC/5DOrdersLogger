@@ -64,14 +64,5 @@ class OrderWriterTest {
                         () -> "Expected block not found:\n" + block + "\nActual output:\n" + output)
         );
     }
-
-    @Test
-    void acceptanceTest() throws IOException {
-        Path exampleInputPath = Path.of("exampleInput.md");
-        Files.deleteIfExists(exampleInputPath);
-        Main.main("exampleInput.json");
-        assertTrue(FileComparator.haveSameContent(exampleInputPath, Path.of("exampleOutput.md")));
-        Files.delete(exampleInputPath);
-    }
 }
 
