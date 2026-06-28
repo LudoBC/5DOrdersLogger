@@ -59,6 +59,17 @@ public class UserInteractionTest {
         assertEquals(expectedOutput, capturedOut.toString());
     }
 
+    @Test
+    void givenNoCommandLineInputWhenTheUserGivesAJsonFileWhichDoesntExistThenAnErrorOccurs() throws IOException {
+        Files.deleteIfExists(Path.of("some/location.json"));
+        writeInputLine("some/location.json");
+
+        assertThrows(IOException.class, Main::main);
+
+        String expectedOutput = Main.INPUT_LOCATION_OF_JSON_FILE;
+        assertEquals(expectedOutput, capturedOut.toString());
+    }
+
     static final String MINIMAL_JSON = """
             {
                 "iteration" : 0,
