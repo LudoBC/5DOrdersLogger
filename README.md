@@ -75,6 +75,12 @@ Run Unit Tests
 ```Bash
 mvn test
 ```
+Rum pitest mutation tests
+```Bash
+mvn test-compile pitest:mutationCoverage
+```
+The resulting rapports can be read in 
+```./target/pit-reports/index.html```.
 
 ### License
 This project is licensed under the MIT License.
