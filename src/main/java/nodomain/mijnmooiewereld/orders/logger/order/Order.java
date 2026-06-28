@@ -16,10 +16,6 @@ public interface Order {
         return board().timeline();
     }
 
-    default int year() {
-        return board().year();
-    }
-
     default String owner() {
         return unit().owner();
     }
