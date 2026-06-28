@@ -13,10 +13,13 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WebFileTest {
+    private static final Path
+            orderLogMD = Path.of("orderlog.md"),
+            exampleOutputMd = Path.of("exampleOutput.md");
+
     private HttpServer server;
     private final int port = 8081;
 
@@ -30,21 +33,19 @@ public class WebFileTest {
     }
 
     @AfterEach
-    void stopServer() {
+    void stopServer() throws IOException {
         if (server != null) {
             server.stop(0);
             System.out.println("Test server stopped.");
         }
+        Files.deleteIfExists(orderLogMD);
     }
 
     @Test
     void testLogWriterFromWebpage() throws IOException {
-        Path orderLogMD = Path.of("orderlog.md"), exampleOutputMd = Path.of("exampleOutput.md");
         Files.deleteIfExists(orderLogMD);
         Main.main("http://localhost:" + port);
         assertTrue(FileComparator.haveSameContent(orderLogMD, exampleOutputMd));
-        Files.delete(orderLogMD);
-        assertFalse(Files.exists(orderLogMD));
     }
 
     static class SimplePageHandler implements HttpHandler {
