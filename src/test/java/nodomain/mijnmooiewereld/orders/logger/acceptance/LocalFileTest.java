@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LocalFileTest {
@@ -17,5 +18,6 @@ public class LocalFileTest {
         Main.main("exampleInput.json");
         assertTrue(FileComparator.haveSameContent(exampleInputMD, exampleOutputMd));
         Files.delete(exampleInputMD);
+        assertFalse(Files.exists(exampleInputMD));
     }
 }

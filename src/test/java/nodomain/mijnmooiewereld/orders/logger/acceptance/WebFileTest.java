@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class WebFileTest {
@@ -43,6 +44,7 @@ public class WebFileTest {
         Main.main("http://localhost:" + port);
         assertTrue(FileComparator.haveSameContent(orderLogMD, exampleOutputMd));
         Files.delete(orderLogMD);
+        assertFalse(Files.exists(orderLogMD));
     }
 
     static class SimplePageHandler implements HttpHandler {
