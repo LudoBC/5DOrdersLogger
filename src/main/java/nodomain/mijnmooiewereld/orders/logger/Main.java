@@ -34,13 +34,14 @@ public class Main {
             URL url = new URL(input);
             inputStreamSupplier = url::openStream;
             outputPath = Path.of("orderlog.md");
-        } else {
-            if (! input.endsWith(".json")) throw new IllegalArgumentException("A path to a Json file must be input");
+        } else if (input.endsWith("json")) {
             Path inputPath = Path.of(input);
             inputStreamSupplier = () -> Files.newInputStream(inputPath);
             outputPath = inputPath.resolve("..")
                     .resolve(inputPath.getFileName().toString().replace(".json", ".md"))
                     .normalize();
+        } else {
+            throw new IllegalArgumentException("A path to a Json file must be input");
         }
 
         if (Files.exists(outputPath)) {
