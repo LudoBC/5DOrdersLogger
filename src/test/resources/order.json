@@ -30,8 +30,8 @@
     },
     {
       "timeline": 1,
-      "year": 1901,
-      "phase": "Fall",
+      "year": 1902,
+      "phase": "Sping",
       "units": {
         "Ukr": {
           "owner": "Russia",
@@ -151,14 +151,14 @@
       "$type": "Support",
       "destination": {
         "timeline": 1,
-        "year": 1901,
-        "phase": "Fall",
+        "year": 1902,
+        "phase": "Spring",
         "region": "Rum"
       },
       "supportLocation": {
         "timeline": 1,
-        "year": 1901,
-        "phase": "Fall",
+        "year": 1902,
+        "phase": "Spring",
         "region": "Ukr"
       },
       "status": "Success",
@@ -169,8 +169,8 @@
       },
       "location": {
         "timeline": 1,
-        "year": 1901,
-        "phase": "Fall",
+        "year": 1902,
+        "phase": "Spring",
         "region": "Sev"
       }
     },
@@ -178,8 +178,8 @@
       "$type": "Move",
       "destination": {
         "timeline": 1,
-        "year": 1901,
-        "phase": "Fall",
+        "year": 1902,
+        "phase": "Spring",
         "region": "Rum"
       },
       "status": "Success",
@@ -190,8 +190,8 @@
       },
       "location": {
         "timeline": 1,
-        "year": 1901,
-        "phase": "Fall",
+        "year": 1902,
+        "phase": "Spring",
         "region": "Ukr"
       }
     },
@@ -265,8 +265,8 @@
       },
       "location": {
         "timeline": 1,
-        "year": 1901,
-        "phase": "Fall",
+        "year": 1902,
+        "phase": "Spring",
         "region": "Nth"
       }
     },

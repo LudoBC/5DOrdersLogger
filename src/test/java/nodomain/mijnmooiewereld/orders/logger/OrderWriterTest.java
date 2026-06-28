@@ -41,7 +41,7 @@ class OrderWriterTest {
         List<String> expectedBlocks = Stream.of(
                 """
                 ## RUSSIA
-                ### T1F'01:
+                ### T1S'02:
                 - A Ukr - Rum
                 - F Sev S A Ukr - Rum
                 
@@ -51,7 +51,7 @@ class OrderWriterTest {
                 """,
                 """
                 ## ENGLAND
-                ### T1F'01:
+                ### T1S'02:
                 - F Nth C T2F'01 A Yor - T1F'01 Bel
                 
                 ### T2F'01:
