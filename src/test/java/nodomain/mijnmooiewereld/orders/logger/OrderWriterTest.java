@@ -3,8 +3,10 @@ package nodomain.mijnmooiewereld.orders.logger;
 import nodomain.mijnmooiewereld.orders.logger.order.Order;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,10 +26,10 @@ class OrderWriterTest {
     }
 
     @Test
-    void testWriteOrders() {
+    void testWriteOrders() throws IOException {
         Path jsonPath = Path.of("src/test/resources/order.json");
 
-        List<Order> ordersList = OrderDao.ORDER_DAO.getAllFromSource(jsonPath);
+        List<Order> ordersList = OrderDao.ORDER_DAO.getAllFromSource(Files.newInputStream(jsonPath));
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw);
 
@@ -38,22 +40,22 @@ class OrderWriterTest {
 
         List<String> expectedBlocks = Stream.of(
                 """
-                ### Russia
-                T1F'01:\\
-                A Ukr - Rum\\
-                F Sev S A Ukr - Rum
+                ## RUSSIA
+                ### T1F'01:
+                - A Ukr - Rum
+                - F Sev S A Ukr - Rum
                 
-                T2F'01:\\
-                *F Sev - Bla*\\
-                *A Ukr S T2S'02 A Ukr - T2S'02 Rum*
+                ### T2F'01:
+                - *F Sev - Bla*
+                - *A Ukr S T2S'02 A Ukr - T2S'02 Rum*
                 """,
                 """
-                ### England
-                T1F'01:\\
-                F Nth C T2F'01 A Yor - T1F'01 Bel
+                ## ENGLAND
+                ### T1F'01:
+                - F Nth C T2F'01 A Yor - T1F'01 Bel
                 
-                T2F'01:\\
-                A Yor - T1F'01 Bel
+                ### T2F'01:
+                - A Yor - T1F'01 Bel
                 """
         ).map(this::normalize).toList();
 
@@ -61,6 +63,15 @@ class OrderWriterTest {
                 assertTrue(output.contains(block),
                         () -> "Expected block not found:\n" + block + "\nActual output:\n" + output)
         );
+    }
+
+    @Test
+    void acceptanceTest() throws IOException {
+        Path exampleInputPath = Path.of("exampleInput.md");
+        Files.deleteIfExists(exampleInputPath);
+        Main.main("exampleInput.json");
+        assertTrue(FileComparator.haveSameContent(exampleInputPath, Path.of("exampleOutput.md")));
+        Files.delete(exampleInputPath);
     }
 }
 

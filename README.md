@@ -43,26 +43,28 @@ This will produce a runnable JAR in target/.
 
 You can run the tool in two ways:
 
-1. Provide JSON file path as an argument
+1. Provide JSON file path or http web page as an argument
 ```Bash
-java -jar target/OrdersLogger-1.1-jar-with-dependencies.jar /path/to/results.json
+java -jar target/OrdersLogger-1.2-jar-with-dependencies.jar /path/to/results.json
 ```
 2. Run without arguments (interactive prompt)
 ```Bash
-java -jar target/OrdersLogger-1.1-jar-with-dependencies.jar
+java -jar target/OrdersLogger-1.2-jar-with-dependencies.jar
 ```
 You will be prompted:
 
 
 ```
-Please input the location on the local file system of the .json file containing the results to be turned into the orders log.
-This file can be obtained from the 5D diplomacy adjudicator.
+Please input the location of the .json file containing the results to be turned into the orders log.
+The location must either a path on the local file system, or a web page.
+The correct file can be obtained from the 5D diplomacy adjudicator.
 ```
 
 ### Output
 
-The generated .md file will be created in the same directory as the input JSON.
-The filename will match the JSON filename but with .md extension.
+The generated .md file will be created in the same directory as the input JSON,
+or if using a web page wherever is being used in a new file named orderlog.md.
+In the first case filename will match the JSON filename but with .md extension.
 
 Example:
 
