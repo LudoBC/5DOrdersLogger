@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Due to the way that the IO class captures System.in, this class must be the only class
  * that runs tests anything related to System.in. It must also be set up before IO captures
- * System.in. All other tests may therefore not trigger any part of the application that uses IO.
+ * System.in. All other tests may therefore not trigger any part of the application that uses IO input.
  */
 public class UserInteractionTest {
     private final PrintStream originalOut = System.out;
