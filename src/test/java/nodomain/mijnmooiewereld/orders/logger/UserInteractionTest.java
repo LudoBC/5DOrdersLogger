@@ -90,7 +90,7 @@ public class UserInteractionTest {
 
         Main.main("someFile.json");
 
-        assertTrue(Files.readString(someMd).isBlank());
+        assertEquals("# Order log:", Files.readString(someMd));
     }
 
     private void writeInputLine(String text) throws IOException {

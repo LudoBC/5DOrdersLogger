@@ -1,3 +1,4 @@
+# Order log:
 ## AUSTRIA
 ### T1F'04:
 - A Tri S T1S'05 A Bud - T1S'05 Tri
@@ -49,7 +50,6 @@
 - F ION - TYS
 - F TYS - LYO
 
-
 ## TURKEY
 ### T1F'04:
 - A Smy - Con
@@ -98,7 +98,6 @@
 - *A Alb - Gre*
 - F AEG - Con
 - *A Ank Holds*
-
 
 ## ENGLAND
 ### T1F'04:
@@ -150,7 +149,6 @@
 - *F Lon S F ENG - NTH*
 - *F ENG - NTH*
 - F Stp_N - T9F'03 Stp_N
-
 
 ## ITALY
 ### T1F'04:
@@ -218,7 +216,6 @@
 - A Ven S A Tri H
 - F ADR - ION
 
-
 ## FRANCE
 ### T1F'04:
 - F LYO - WES
@@ -279,7 +276,6 @@
 - F WES S F Tun H
 - A Pic - Par
 
-
 ## GERMANY
 ### T1F'04:
 - A Gal Holds
@@ -324,7 +320,6 @@
 - A Sil - Ber
 - F Ber - BAL
 - A Bur - Gas
-
 
 ## RUSSIA
 ### T1F'04:
@@ -390,5 +385,3 @@
 - A Mos - Stp
 - *F Den - NTH*
 - F BLA C A Ank - Sev
-
-

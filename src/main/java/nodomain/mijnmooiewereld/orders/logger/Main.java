@@ -55,11 +55,13 @@ public class Main {
         Files.createFile(outputPath);
 
         try (
-                var toOutput = new PrintWriter(Files.newBufferedWriter(outputPath));
-                var inputStream = inputStreamSupplier.get()
+                PrintWriter outputWriter = new PrintWriter(Files.newBufferedWriter(outputPath));
+                InputStream inputStream = inputStreamSupplier.get()
         ) {
-            filterOrdersAndSortByPower(OrderDao.ORDER_DAO.getAllFromSource(inputStream)).values()
-                    .forEach(ownedOrders -> writeOrdersPerPower(toOutput, ownedOrders));
+            List<Order> inputData = OrderDao.ORDER_DAO.getAllFromSource(inputStream);
+            outputWriter.print("# Order log:");
+            filterOrdersAndSortByPower(inputData).values()
+                    .forEach(ownedOrders -> writeOrdersPerPower(outputWriter, ownedOrders));
         }
     }
 
@@ -78,16 +80,14 @@ public class Main {
     }
 
     static void writeOrdersPerPower(PrintWriter output, List<Order> ownedOrders) {
-        output.println("## " + ownedOrders.getFirst().unit().owner().toUpperCase());
+        output.print(System.lineSeparator() + "## " + ownedOrders.getFirst().unit().owner().toUpperCase());
         ownedOrders.stream()
                 .collect(groupingBy(Order::timeline))
-                .values().forEach(orders -> {
-                    output.println("### " + orders.getFirst().board() + ":");
-                    output.println(orders.stream()
-                            .map(order -> "- " + order.printableString())
-                            .collect(joining(System.lineSeparator())));
-                    output.println();
-                });
-        output.println();
+                .values().stream()
+                .peek(orders -> output.println(System.lineSeparator() + "### " + orders.getFirst().board() + ":"))
+                .flatMap(List::stream)
+                .map(Order::printableString)
+                .map("- "::concat)
+                .forEachOrdered(output::println);
     }
 }
