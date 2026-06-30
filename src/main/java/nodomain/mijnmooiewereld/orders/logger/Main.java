@@ -5,7 +5,7 @@ import nodomain.mijnmooiewereld.utils.CheckedSupplier;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,8 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Comparator.*;
-import static java.util.stream.Collectors.*;
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.maxBy;
 
 public class Main {
     private Main() {}
@@ -28,7 +29,8 @@ public class Main {
     public static void main(String... args) throws IOException {
         String input = Arrays.stream(args).findFirst().orElseGet(() -> IO.readln(INPUT_LOCATION_OF_JSON_FILE));
         CheckedSupplier<InputStream, IOException> inputStreamSupplier;
-        Path outputPath;
+        Path outputPath = null;
+        PrintStream outputWriter;
 
         if (input.startsWith("http")) {
             URL url = new URL(input);
@@ -40,28 +42,36 @@ public class Main {
             outputPath = inputPath.resolve("..")
                     .resolve(inputPath.getFileName().toString().replace(".json", ".md"))
                     .normalize();
+        } else if (input.isBlank()) {
+            inputStreamSupplier = () -> System.in;
         } else {
             throw new IllegalArgumentException("A path to a Json file must be input");
         }
 
-        if (Files.exists(outputPath)) {
-            String wantToDelete = IO.readln("A file already exists at "
-                    + outputPath.toAbsolutePath()
-                    + ". Would you like to remove it? [Y, n]");
-            if (wantToDelete.isBlank() || List.of('y', 'Y').contains(wantToDelete.charAt(0))) {
-                Files.delete(outputPath);
+        if (outputPath != null) {
+            if (Files.exists(outputPath)) {
+                String wantToDelete = IO.readln("A file already exists at "
+                        + outputPath.toAbsolutePath()
+                        + ". Would you like to remove it? [Y, n]");
+                if (wantToDelete.isBlank() || List.of('y', 'Y').contains(wantToDelete.charAt(0))) {
+                    Files.delete(outputPath);
+                }
             }
+            Files.createFile(outputPath);
+            outputWriter = new PrintStream(Files.newOutputStream(outputPath));
+        } else {
+            outputWriter = System.out;
         }
-        Files.createFile(outputPath);
 
         try (
-                PrintWriter outputWriter = new PrintWriter(Files.newBufferedWriter(outputPath));
                 InputStream inputStream = inputStreamSupplier.get()
         ) {
             List<Order> inputData = OrderDao.ORDER_DAO.getAllFromSource(inputStream);
             outputWriter.print("# Order log:");
             filterOrdersAndSortByPower(inputData).values()
                     .forEach(ownedOrders -> writeOrdersPerPower(outputWriter, ownedOrders));
+        } finally {
+            if (outputWriter != System.out) outputWriter.close();
         }
     }
 
@@ -79,7 +89,7 @@ public class Main {
                 .collect(groupingBy(Order::owner));
     }
 
-    static void writeOrdersPerPower(PrintWriter output, List<Order> ownedOrders) {
+    static void writeOrdersPerPower(PrintStream output, List<Order> ownedOrders) {
         output.print(System.lineSeparator() + "## " + ownedOrders.getFirst().unit().owner().toUpperCase());
         ownedOrders.stream()
                 .collect(groupingBy(Order::timeline))

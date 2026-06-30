@@ -4,8 +4,8 @@ import nodomain.mijnmooiewereld.orders.logger.order.Order;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -30,13 +30,13 @@ class OrderWriterTest {
         Path jsonPath = Path.of("src/test/resources/order.json");
 
         List<Order> ordersList = OrderDao.ORDER_DAO.getAllFromSource(Files.newInputStream(jsonPath));
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
+        var byteArrayOutputStream = new ByteArrayOutputStream();
+        var printStream = new PrintStream(byteArrayOutputStream);
 
         Main.filterOrdersAndSortByPower(ordersList).values()
-                .forEach(ownedOrders -> Main.writeOrdersPerPower(pw, ownedOrders));
+                .forEach(ownedOrders -> Main.writeOrdersPerPower(printStream, ownedOrders));
 
-        String output = normalize(sw.toString());
+        String output = normalize(byteArrayOutputStream.toString());
 
         List<String> expectedBlocks = Stream.of(
                 """

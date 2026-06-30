@@ -41,7 +41,7 @@ This will produce a runnable JAR in target/.
 
 ### Usage
 
-You can run the tool in two ways:
+You can run the tool in three ways:
 
 1. Provide JSON file path or http web page as an argument
 ```Bash
@@ -55,13 +55,21 @@ java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar http://host:port/j
 java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar
 ```
 You will be prompted:
-
-
 ```
 Please input the location of the .json file containing the results to be turned into the orders log.
 The location must either a path on the local file system, or a web page.
 The correct file can be obtained from the 5D diplomacy adjudicator.
 ```
+3. Run with a blank string as argument
+```Bash
+java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar " "
+```
+In this case the json is expected to be supplied through System.in 
+and the markdown with we output on System.out, 
+allowing for the use of this program with linux command line pipes.
+It can also be used by other programs using this tool as a dependency,
+though do note that the program will in this use case close whatever stream
+is supplied to it by System.in
 
 ### Output
 
