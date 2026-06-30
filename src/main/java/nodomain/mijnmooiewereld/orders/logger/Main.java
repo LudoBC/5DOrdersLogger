@@ -63,15 +63,15 @@ public class Main {
             outputWriter = System.out;
         }
 
-        try (
-                InputStream inputStream = inputStreamSupplier.get()
-        ) {
+        try (InputStream inputStream = inputStreamSupplier.get()) {
             List<Order> inputData = OrderDao.ORDER_DAO.getAllFromSource(inputStream);
             outputWriter.print("# Order log:");
             filterOrdersAndSortByPower(inputData).values()
                     .forEach(ownedOrders -> writeOrdersPerPower(outputWriter, ownedOrders));
         } finally {
-            if (outputWriter != System.out) outputWriter.close();
+            if (outputWriter != System.out) {
+                outputWriter.close();
+            }
         }
     }
 
