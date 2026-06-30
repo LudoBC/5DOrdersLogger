@@ -65,7 +65,7 @@ public class Main {
 
         try (InputStream inputStream = inputStreamSupplier.get()) {
             List<Order> inputData = OrderDao.ORDER_DAO.getAllFromSource(inputStream);
-            outputWriter.print("# Order log:");
+            outputWriter.print("# ORDERS LOG");
             filterOrdersAndSortByPower(inputData).values()
                     .forEach(ownedOrders -> writeOrdersPerPower(outputWriter, ownedOrders));
         } finally {

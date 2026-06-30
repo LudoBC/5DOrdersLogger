@@ -45,14 +45,14 @@ You can run the tool in three ways:
 
 1. Provide JSON file path or http web page as an argument
 ```Bash
-java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar /path/to/results.json
+java -jar target/OrdersLogger-1.3-jar-with-dependencies.jar /path/to/results.json
 ```
 ```Bash
-java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar http://host:port/jsonsite
+java -jar target/OrdersLogger-1.3-jar-with-dependencies.jar http://host:port/jsonsite
 ```
 2. Run without arguments (interactive prompt)
 ```Bash
-java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar
+java -jar target/OrdersLogger-1.3-jar-with-dependencies.jar
 ```
 You will be prompted:
 ```
@@ -62,7 +62,7 @@ The correct file can be obtained from the 5D diplomacy adjudicator.
 ```
 3. Run with a blank string as argument
 ```Bash
-java -jar target/OrdersLogger-1.2.1-jar-with-dependencies.jar " "
+java -jar target/OrdersLogger-1.3-jar-with-dependencies.jar " "
 ```
 In this case the json is expected to be supplied through System.in 
 and the markdown with we output on System.out, 
