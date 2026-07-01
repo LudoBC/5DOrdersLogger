@@ -65,7 +65,11 @@ public class Main {
 
         try (InputStream inputStream = inputStreamSupplier.get()) {
             List<Order> inputData = OrderDao.ORDER_DAO.getAllFromSource(inputStream);
-            outputWriter.print("# ORDERS LOG");
+            int currentTurn = inputData.stream()
+                    .map(Order::board)
+                    .mapToInt(Location.Board::turn)
+                    .max().orElse(0);
+            outputWriter.print("# ORDERS LOG TURN " + currentTurn);
             filterOrdersAndSortByPower(inputData).values()
                     .forEach(ownedOrders -> writeOrdersPerPower(outputWriter, ownedOrders));
         } finally {
