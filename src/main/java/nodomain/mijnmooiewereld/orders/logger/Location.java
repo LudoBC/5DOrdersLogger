@@ -8,9 +8,13 @@ public record Location(
 ) {
     public record Board(
             int year,
-            String phase,
+            Phase phase,
             int timeline
     ) {
+        public enum Phase {
+            SPRING, FALL, WINTER
+        }
+
         public static int STARTING_YEAR = 1901;
 
         public boolean isSameBoard(Board as) {
@@ -18,15 +22,14 @@ public record Location(
         }
 
         public @NotNull String toString() {
-            return "T"+timeline+phase.charAt(0)+Integer.toString(year).replace("19", "'");
+            return "T"+timeline+phase.name().charAt(0)+Integer.toString(year).replace("19", "'");
         }
 
         public int turn() {
             return 3 * (year() - STARTING_YEAR) +  switch (phase) {
-                case "Spring" -> 0;
-                case "Fall" -> 1;
-                case "Winter" -> 2;
-                default -> throw new IllegalStateException("Unexpected value: " + phase);
+                case SPRING -> 0;
+                case FALL -> 1;
+                case WINTER -> 2;
             };
         }
     }
