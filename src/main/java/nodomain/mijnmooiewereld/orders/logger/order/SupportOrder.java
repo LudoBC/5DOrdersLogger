@@ -10,7 +10,7 @@ public record SupportOrder(
         Location location,
         Location supportLocation,
         Unit supportedUnit
-) implements Order {
+) implements Order.MainPhase {
     @Override
     public String actionString() {
         char supportedUnitType = supportedUnit.type().charAt(0);

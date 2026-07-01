@@ -7,7 +7,7 @@ public record HoldOrder(
         String status,
         Unit unit,
         Location location
-) implements Order {
+) implements Order.MainPhase {
     @Override
     public String actionString() {
         return "Holds";

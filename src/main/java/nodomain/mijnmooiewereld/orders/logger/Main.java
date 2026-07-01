@@ -5,7 +5,7 @@ import nodomain.mijnmooiewereld.utils.CheckedSupplier;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.PrintStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,8 +13,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.Comparator.*;
-import static java.util.stream.Collectors.*;
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.maxBy;
 
 public class Main {
     private Main() {}
@@ -28,37 +29,49 @@ public class Main {
     public static void main(String... args) throws IOException {
         String input = Arrays.stream(args).findFirst().orElseGet(() -> IO.readln(INPUT_LOCATION_OF_JSON_FILE));
         CheckedSupplier<InputStream, IOException> inputStreamSupplier;
-        Path outputPath;
+        Path outputPath = null;
+        PrintStream outputWriter;
 
         if (input.startsWith("http")) {
             URL url = new URL(input);
             inputStreamSupplier = url::openStream;
             outputPath = Path.of("orderlog.md");
-        } else {
-            if (! input.endsWith(".json")) throw new IllegalArgumentException("A path to a Json file must be input");
+        } else if (input.endsWith("json")) {
             Path inputPath = Path.of(input);
             inputStreamSupplier = () -> Files.newInputStream(inputPath);
             outputPath = inputPath.resolve("..")
                     .resolve(inputPath.getFileName().toString().replace(".json", ".md"))
                     .normalize();
+        } else if (input.isBlank()) {
+            inputStreamSupplier = () -> System.in;
+        } else {
+            throw new IllegalArgumentException("A path to a Json file must be input");
         }
 
-        if (Files.exists(outputPath)) {
-            String wantToDelete = IO.readln("A file already exists at "
-                    + outputPath.toAbsolutePath()
-                    + ". Would you like to remove it? [Y, n]");
-            if (wantToDelete.isBlank() || List.of('y', 'Y').contains(wantToDelete.charAt(0))) {
-                Files.delete(outputPath);
+        if (outputPath != null) {
+            if (Files.exists(outputPath)) {
+                String wantToDelete = IO.readln("A file already exists at "
+                        + outputPath.toAbsolutePath()
+                        + ". Would you like to remove it? [Y, n]");
+                if (wantToDelete.isBlank() || List.of('y', 'Y').contains(wantToDelete.charAt(0))) {
+                    Files.delete(outputPath);
+                }
             }
+            Files.createFile(outputPath);
+            outputWriter = new PrintStream(Files.newOutputStream(outputPath));
+        } else {
+            outputWriter = System.out;
         }
-        Files.createFile(outputPath);
 
-        try (
-                var toOutput = new PrintWriter(Files.newBufferedWriter(outputPath));
-                var inputStream = inputStreamSupplier.get()
-        ) {
-            filterOrdersAndSortByPower(OrderDao.ORDER_DAO.getAllFromSource(inputStream)).values()
-                    .forEach(ownedOrders -> writeOrdersPerPower(toOutput, ownedOrders));
+        try (InputStream inputStream = inputStreamSupplier.get()) {
+            List<Order> inputData = OrderDao.ORDER_DAO.getAllFromSource(inputStream);
+            outputWriter.print("# ORDERS LOG");
+            filterOrdersAndSortByPower(inputData).values()
+                    .forEach(ownedOrders -> writeOrdersPerPower(outputWriter, ownedOrders));
+        } finally {
+            if (outputWriter != System.out) {
+                outputWriter.close();
+            }
         }
     }
 
@@ -76,17 +89,15 @@ public class Main {
                 .collect(groupingBy(Order::owner));
     }
 
-    static void writeOrdersPerPower(PrintWriter output, List<Order> ownedOrders) {
-        output.println("## " + ownedOrders.getFirst().unit().owner().toUpperCase());
+    static void writeOrdersPerPower(PrintStream output, List<Order> ownedOrders) {
+        output.print(System.lineSeparator() + "## " + ownedOrders.getFirst().unit().owner().toUpperCase());
         ownedOrders.stream()
                 .collect(groupingBy(Order::timeline))
-                .values().forEach(orders -> {
-                    output.println("### " + orders.getFirst().board() + ":");
-                    output.println(orders.stream()
-                            .map(order -> "- " + order.printableString())
-                            .collect(joining(System.lineSeparator())));
-                    output.println();
-                });
-        output.println();
+                .values().stream()
+                .peek(orders -> output.println(System.lineSeparator() + "### " + orders.getFirst().board() + ":"))
+                .flatMap(List::stream)
+                .map(Order::printableString)
+                .map("- "::concat)
+                .forEachOrdered(output::println);
     }
 }

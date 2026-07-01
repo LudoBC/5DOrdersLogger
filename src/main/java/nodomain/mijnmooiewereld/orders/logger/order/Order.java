@@ -20,16 +20,19 @@ public interface Order {
         return unit().owner();
     }
 
-    default String actionString() {
-        throw new UnsupportedOperationException();
-    }
+    String printableString();
 
-    default String printableString() {
-        String base = unit().type().charAt(0) + " " + location() + " " + actionString();
-        if ("Failure".equals(status())) {
-            return "*"+base+"*";
-        } else {
-           return base;
+    interface MainPhase extends Order {
+        String actionString();
+
+        @Override
+        default String printableString() {
+            String base = unit().type().charAt(0) + " " + location() + " " + actionString();
+            if ("Failure".equals(status())) {
+                return "*"+base+"*";
+            } else {
+                return base;
+            }
         }
     }
 }

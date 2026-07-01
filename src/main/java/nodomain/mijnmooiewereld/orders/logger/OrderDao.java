@@ -5,10 +5,7 @@ import tools.jackson.core.type.TypeReference;
 import tools.jackson.databind.ObjectMapper;
 import nodomain.mijnmooiewereld.orders.logger.order.*;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +71,7 @@ public enum OrderDao {
             String region
     ) {
         Location toLocation() {
-            return new Location(new Location.Board(year, phase, timeline), region);
+            return new Location(new Location.Board(year, Location.Board.Phase.valueOf(phase.toUpperCase()), timeline), region);
         }
     }
 

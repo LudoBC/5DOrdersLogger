@@ -8,7 +8,7 @@ public record MoveOrder(
         String status,
         Unit unit,
         Location location
-) implements Order {
+) implements Order.MainPhase {
     @Override
     public String actionString() {
         return "- " + destination().relativeToString(location);
