@@ -9,7 +9,7 @@ public record ConvoyOrder(
         Unit unit,
         Location location,
         Location convoyLocation
-) implements Order {
+) implements Order.MainPhase {
     @Override
     public String actionString() {
         if (location.board().isSameBoard(convoyLocation.board())) {
