@@ -81,7 +81,7 @@ public class Main {
                 .collect(groupingBy(Location.Board::timeline,
                         maxBy(comparing(Location.Board::turn))));
         Location.Board furthersBoard = currentBoards.get(1).orElseThrow();
-        outputWriter.print("# TURN " + furthersBoard.turn() + " - " + furthersBoard.phase() + furthersBoard.year());
+        outputWriter.print("# TURN " + (furthersBoard.turn() + 1) + " - " + furthersBoard.phase() + " " + furthersBoard.year());
         return orders.stream()
                 .filter(o ->
                         currentBoards.get(o.timeline())
