@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
@@ -80,7 +81,8 @@ public class Main {
                 .distinct()
                 .collect(groupingBy(Location.Board::timeline,
                         maxBy(comparing(Location.Board::turn))));
-        Location.Board furthersBoard = currentBoards.get(1).orElseThrow();
+        Location.Board furthersBoard = currentBoards.getOrDefault(1, Optional.empty())
+                .orElse(new Location.Board(1900, Location.Board.Phase.WINTER, 1));
         outputWriter.print("# TURN " + (furthersBoard.turn() + 1) + " - " + furthersBoard.phase() + " " + furthersBoard.year());
         return orders.stream()
                 .filter(o ->
