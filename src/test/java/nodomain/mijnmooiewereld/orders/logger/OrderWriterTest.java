@@ -33,7 +33,7 @@ class OrderWriterTest {
         var byteArrayOutputStream = new ByteArrayOutputStream();
         var printStream = new PrintStream(byteArrayOutputStream);
 
-        Main.filterOrdersAndSortByPower(ordersList).values()
+        Main.filterOrdersAndSortByPower(ordersList, printStream).values()
                 .forEach(ownedOrders -> Main.writeOrdersPerPower(printStream, ownedOrders));
 
         String output = normalize(byteArrayOutputStream.toString());

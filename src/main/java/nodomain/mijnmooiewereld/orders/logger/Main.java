@@ -65,12 +65,7 @@ public class Main {
 
         try (InputStream inputStream = inputStreamSupplier.get()) {
             List<Order> inputData = OrderDao.ORDER_DAO.getAllFromSource(inputStream);
-            int currentTurn = inputData.stream()
-                    .map(Order::board)
-                    .mapToInt(Location.Board::turn)
-                    .max().orElse(0);
-            outputWriter.print("# ORDERS LOG TURN " + currentTurn);
-            filterOrdersAndSortByPower(inputData).values()
+            filterOrdersAndSortByPower(inputData, outputWriter).values()
                     .forEach(ownedOrders -> writeOrdersPerPower(outputWriter, ownedOrders));
         } finally {
             if (outputWriter != System.out) {
@@ -79,12 +74,14 @@ public class Main {
         }
     }
 
-    static Map<String, List<Order>> filterOrdersAndSortByPower(List<Order> orders) {
+    static Map<String, List<Order>> filterOrdersAndSortByPower(List<Order> orders, PrintStream outputWriter) {
         var currentBoards = orders.stream()
                 .map(Order::board)
                 .distinct()
                 .collect(groupingBy(Location.Board::timeline,
                         maxBy(comparing(Location.Board::turn))));
+        Location.Board furthersBoard = currentBoards.get(1).orElseThrow();
+        outputWriter.print("# TURN " + furthersBoard.turn() + " - " + furthersBoard.phase() + furthersBoard.year());
         return orders.stream()
                 .filter(o ->
                         currentBoards.get(o.timeline())
